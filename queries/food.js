@@ -38,4 +38,25 @@ const createFood = async (food) => {
   }
 };
 
-module.exports = { getAllFood, getOneFood, createFood };
+const updateFood = async (id, food) => {
+  try {
+    const updatedFood = await db.one(
+      "UPDATE foods SET name=$1, image=$2, calories=$3, price=$4, is_veg=$5, is_spicy=$6, description=$7 WHERE id=$8 RETURNING *",
+      [
+        food.name,
+        food.image,
+        food.calories,
+        food.price,
+        food.is_veg,
+        food.is_spicy,
+        food.description,
+        id,
+      ]
+    );
+    return updatedFood;
+  } catch (error) {
+    return error;
+  }
+};
+
+module.exports = { getAllFood, getOneFood, createFood, updateFood };

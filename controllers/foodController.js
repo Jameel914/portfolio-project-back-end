@@ -1,7 +1,12 @@
 const express = require("express");
 const foods = express.Router();
 
-const { getAllFood, getOneFood, createFood } = require("../queries/food.js");
+const {
+  getAllFood,
+  getOneFood,
+  createFood,
+  updateFood,
+} = require("../queries/food.js");
 
 foods.get("/", async (req, res) => {
   const allfood = await getAllFood();
@@ -29,6 +34,17 @@ foods.post("/", async (req, res) => {
     res.status(200).json(food);
   } else {
     res.status(404).json({ message: "Unable to add the food" });
+  }
+});
+
+foods.put("/:id", async (req, res) => {
+  const id = Number(req.params.id);
+  const body = req.body;
+  const updatedFood = await updateFood(id, body);
+  if (updatedFood.id) {
+    res.status(200).json(updatedFood);
+  } else {
+    res.status(404).json({ message: "Unable to update the food" });
   }
 });
 
