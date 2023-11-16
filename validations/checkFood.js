@@ -15,7 +15,8 @@ const checkPrice = (req, res, next) => {
 };
 
 const checkIsSpicy = (req, res, next) => {
-  if (req.body & (typeof is_spicy === "boolean")) {
+  const spicy = req.body.is_spicy;
+  if (typeof spicy === "boolean") {
     next();
   } else {
     res.status(400).json({ message: "Is Spicy is required" });
