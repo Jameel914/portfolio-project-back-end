@@ -59,4 +59,16 @@ const updateFood = async (id, food) => {
   }
 };
 
-module.exports = { getAllFood, getOneFood, createFood, updateFood };
+const deleteFood = async (id) => {
+  try {
+    const deletedFood = await db.one(
+      "DELETE FROM foods WHERE id=$1 RETURNING *",
+      id
+    );
+    return deletedFood;
+  } catch (error) {
+    return error;
+  }
+};
+
+module.exports = { getAllFood, getOneFood, createFood, updateFood, deleteFood };
