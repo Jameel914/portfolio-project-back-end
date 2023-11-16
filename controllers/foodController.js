@@ -9,7 +9,7 @@ const {
   deleteFood,
 } = require("../queries/food.js");
 
-const { checkName } = require("../validations/checkFood.js");
+const { checkName, checkPrice } = require("../validations/checkFood.js");
 
 foods.get("/", async (req, res) => {
   const allfood = await getAllFood();
@@ -30,7 +30,7 @@ foods.get("/:id", async (req, res) => {
   }
 });
 
-foods.post("/", checkName, async (req, res) => {
+foods.post("/", checkName, checkPrice, async (req, res) => {
   const body = req.body;
   const food = await createFood(body);
   if (food) {
@@ -40,7 +40,7 @@ foods.post("/", checkName, async (req, res) => {
   }
 });
 
-foods.put("/:id", checkName, async (req, res) => {
+foods.put("/:id", checkName, checkPrice, async (req, res) => {
   const id = Number(req.params.id);
   const body = req.body;
   const updatedFood = await updateFood(id, body);
