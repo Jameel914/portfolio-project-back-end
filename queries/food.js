@@ -18,4 +18,24 @@ const getOneFood = async (id) => {
   }
 };
 
-module.exports = { getAllFood, getOneFood };
+const createFood = async (food) => {
+  try {
+    const newFood = await db.one(
+      "INSERT INTO foods (name, image, calories, price, is_veg, is_spicy, description) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *",
+      [
+        food.name,
+        food.image,
+        food.calories,
+        food.price,
+        food.is_veg,
+        food.is_spicy,
+        food.description,
+      ]
+    );
+    return newFood;
+  } catch (error) {
+    return error;
+  }
+};
+
+module.exports = { getAllFood, getOneFood, createFood };
