@@ -7,11 +7,19 @@ const checkName = (req, res, next) => {
 };
 
 const checkPrice = (req, res, next) => {
-  if (req.body.price & (typeof price === "number")) {
+  if (req.body.price) {
     next();
   } else {
     res.status(400).json({ message: "Price is required" });
   }
 };
 
-module.exports = { checkName, checkPrice };
+const checkIsSpicy = (req, res, next) => {
+  if (req.body & (typeof is_spicy === "boolean")) {
+    next();
+  } else {
+    res.status(400).json({ message: "Is Spicy is required" });
+  }
+};
+
+module.exports = { checkName, checkPrice, checkIsSpicy };
